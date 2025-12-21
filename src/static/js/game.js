@@ -1,5 +1,5 @@
-//import { Player } from "./player.js";
-//import { Map } from "./graphStruct.js"; // kept if you need it later
+import { Player } from "./player.js";
+import { Map } from "./graphStruct.js"; 
 
 document.addEventListener("DOMContentLoaded", () => {
     // Player count page logic
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Main game function
 
-function main() {
+function setupGame() {
     const gameBoard = document.getElementById("gameCanvas");
     const ctx = gameBoard.getContext("2d");
 
@@ -32,9 +32,9 @@ function main() {
     const playerList = [];
 
     for (let i = 0; i < playerCount; i++) {
-        playerList.push(playerColors[i]);
+        playerList.push(new Player(playerColors[i]));
     }
-
+    return playerList;
 }
 
-document.addEventListener("DOMContentLoaded", main);
+document.addEventListener("DOMContentLoaded", setupGame);

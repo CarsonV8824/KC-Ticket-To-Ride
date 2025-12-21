@@ -25,4 +25,4 @@ class Player {
 
 }
 
-export { Player }; { main };
+export { Player };
