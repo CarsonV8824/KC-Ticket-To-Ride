@@ -14,8 +14,8 @@ class Player {
     }
 
     getCertainCards(cardType){
-        certainCards = [];
-        for (let i=0; i < this.cards.length(); i++){
+        let certainCards = [];
+        for (let i=0; i < this.cards.length; i++){
             if (this.cards[i] == cardType){
                 certainCards.push(this.cards[i])
             }

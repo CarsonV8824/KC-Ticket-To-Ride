@@ -7,14 +7,16 @@ class Map{
 
     addVertex(v){
     
-    this.AdjList.set(v, []);
+        this.AdjList.set(v, []);
+
     }
 
     addEdge(v, w){
     
-    this.AdjList.get(v).push(w);
+        this.AdjList.get(v).push(w);
 
-    this.AdjList.get(w).push(v);
+        this.AdjList.get(w).push(v);
+        
     }
 }
 
