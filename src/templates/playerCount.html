@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ticket to Ride</title>
+    <title>Player Count</title>
     <script type="module" src="{{ url_for('static', filename='js/game.js') }}" defer></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <canvas id="gameCanvas" class="gamecanvas"></canvas>
+    <input type="number" id="player-count-input" min="2" max="5" value="2">
+    <button id="player-count-btn" type="button">Set Player Count</button>
 </body>
 </html>
