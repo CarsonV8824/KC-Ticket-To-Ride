@@ -15,11 +15,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 alert("Please enter a valid number of players between 2 and 5.");
                 return;
             }
-            sessionStorage.setItem("playerCount", String(count));
-            window.location.href = "/gamepage";
+                sessionStorage.setItem("playerCount", String(count));
+                window.location.href = "/gamepage";
         };
     }
 
+    // Back to player count page button logic
+    const backBtn = document.getElementById("back-to-player-count-page");
+    if (backBtn) {
+        backBtn.onclick = () => {
+            window.location.href = "/";
+        };
+    }
+    
     // Main game function - only run if canvas exists
     const gameBoard = document.getElementById("gameCanvas");
     if (!gameBoard) return; // Exit if not on game page
@@ -29,9 +37,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const ctx = gameBoard.getContext("2d");
 
-    console.log("Canvas found:", gameBoard);
-    console.log("Canvas dimensions:", gameBoard.width, gameBoard.height);
-    console.log("Context:", ctx);
 
     const playerCount = parseInt(sessionStorage.getItem("playerCount") || "2", 10);
     const playerColors = ["blue", "red", "green", "yellow", "black"];

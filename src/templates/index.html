@@ -7,7 +7,10 @@
     <script type="module" src="{{ url_for('static', filename='js/game.js') }}" defer></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
-<body>
+<header>
+    <button id="back-to-player-count-page" class="back-to-player-count-btn">Change Player Count</button>
+</header>
+<body class="main-page-body">
     <canvas id="gameCanvas" class="gamecanvas"></canvas>
 </body>
 </html>
