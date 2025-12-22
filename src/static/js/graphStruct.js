@@ -1,4 +1,4 @@
-class Map{
+class gameMap{
 
     constructor() {
         this.adjList = new Map();
@@ -27,4 +27,4 @@ class Map{
 }
 
 
-export { Map };
+export { gameMap };
