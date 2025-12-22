@@ -2,7 +2,8 @@ class gameMap{
 
     constructor() {
         this.adjList = new Map();
-        this.#addEdge("Kansas City", "Gladstoone", {"green":2, "Player":null});
+        this.#addEdge("Kansas City", "Gladstone", {"green":2, "Player":null});
+        this.#addEdge("Kansas City", "Raytown", {"white":2, "Player":null});
     }
 
     #addVertex(vertex) {
