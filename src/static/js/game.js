@@ -45,7 +45,9 @@ document.addEventListener("DOMContentLoaded", () => {
     for (let i = 0; i < playerCount; i++) {
         playerList.push(new Player(playerColors[i]));
     }
-        
+    
+    console.log(playerList.length);
+
     const gameMapInstance = new gameMap();
 
     let currentPlayerIndex = 0;
