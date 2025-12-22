@@ -3,7 +3,7 @@ import json
 
 class Database:
     
-    def __init__(self, name="KCTicketToRide.sqlite"):
+    def __init__(self, name="src/database/KCTicketToRide.sqlite"):
         self.connection = sqlite3.connect(name)
         self.cursor = self.connection.cursor()
         self.__make_table()
