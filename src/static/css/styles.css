@@ -50,3 +50,37 @@
     margin: 10px;
     cursor: pointer;
 }
+
+.player-turn{
+    text-align:center;
+    font-size:24px;
+    color:black;
+}
+.player-stats{
+    text-align:center;
+    font-size:16px;
+    color:black;
+}
+
+.open-pile{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 10px;
+}
+
+.choices-on-turn-body{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 10px;
+}
+
+.choice-on-turn{
+    width: 220px;
+    height: 45px;
+    font-size: 20px;
+    margin: 10px;
+    cursor: pointer;
+    align-self: center;
+}

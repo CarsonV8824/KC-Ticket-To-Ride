@@ -40,6 +40,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const playerCount = parseInt(sessionStorage.getItem("playerCount") || "2", 10);
     const playerColors = ["blue", "red", "green", "yellow", "black"];
+    const Cards = ["white", "green"]
+    const OpenPile = [];
+
+    for (let i = 0; i < 5; i++) {
+        OpenPile.push(Cards[Math.floor(Math.random() * Cards.length)]);
+    }
+    
     const playerList = [];
 
     for (let i = 0; i < playerCount; i++) {
@@ -47,6 +54,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     console.log(playerList.length);
+
+    for (let i = 0; i < playerList.length; i++) {
+        playerList[i].addCard(Cards[Math.floor(Math.random() * Cards.length)]);
+        playerList[i].addCard(Cards[Math.floor(Math.random() * Cards.length)]);
+        playerList[i].addCard(Cards[Math.floor(Math.random() * Cards.length)]);
+        playerList[i].addCard(Cards[Math.floor(Math.random() * Cards.length)]);
+    }
 
     const gameMapInstance = new gameMap();
 
@@ -59,19 +73,64 @@ document.addEventListener("DOMContentLoaded", () => {
         // Update game state
     }
 
-    function draw() {
+    function drawCities() {
         ctx.clearRect(0, 0, gameBoard.width, gameBoard.height);
 
-        ctx.fillStyle = "blue";
-        ctx.fillRect(100, 100, 50, 50);
+        ctx.fillStyle = "black";
+        ctx.font = "12px Times New Roman";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText("Kansas City", gameBoard.width / 2, gameBoard.height / 2);
+
+        ctx.fillStyle = "black";
+        ctx.font = "12px Times New Roman";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText("Gladstone", gameBoard.width / 2, gameBoard.height / 2 - 120);
     }
 
     function gameLoop(timestamp) {
         const deltaTime = (timestamp - lastTime) / 1000; // seconds
         lastTime = timestamp;
 
+        const OpenPileElement = document.getElementById("openPile");
+        if (OpenPileElement) {
+            OpenPileElement.textContent = `Open Pile: ${OpenPile.join(", ")}`;
+        }
+
+        const playerTurnElement = document.getElementById("playerTurn");
+        if (playerTurnElement) {
+            playerTurnElement.textContent = `Player ${currentPlayerIndex + 1}'s Turn`;
+        }
+
+        const playerStatsElement = document.getElementById("playerStats");
+        if (playerStatsElement) {
+            playerStatsElement.textContent = `Player ${currentPlayerIndex + 1} has ${(playerList[currentPlayerIndex].showCards()).join(", ")}, cards.`;
+        }
+
+        const DrawTwoCardsBtn = document.getElementById("drawTwoCards");
+        if (DrawTwoCardsBtn ) {
+            DrawTwoCardsBtn.onclick = () => {
+                playerList[currentPlayerIndex].addCard(Cards[Math.floor(Math.random() * Cards.length)]);
+                playerList[currentPlayerIndex].addCard(Cards[Math.floor(Math.random() * Cards.length)]);
+                currentPlayerIndex = (currentPlayerIndex + 1) % playerList.length;
+            };
+        }
+
+        const DrawFromPileBtn = document.getElementById("drawFromPile");
+        if (DrawFromPileBtn ) {
+            DrawFromPileBtn.onclick = () => {
+                playerList[currentPlayerIndex].addCard(Cards[Math.floor(Math.random() * Cards.length)]);
+                OpenPile.pop();
+                OpenPile.push(Cards[Math.floor(Math.random() * Cards.length)]);
+                OpenPileElement.textContent = `Open Pile: ${OpenPile.join(", ")}`;
+                currentPlayerIndex = (currentPlayerIndex + 1) % playerList.length;
+            };
+        }
+
+
         update(deltaTime);
-        draw();
+        drawCities();
 
         requestAnimationFrame(gameLoop);
     }
