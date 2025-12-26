@@ -70,8 +70,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function update(deltaTime) {
         if (gameOver) return;
-        // Update game state
-    }
+        const RouteList = document.getElementById("routeList");
+        if (RouteList) {
+            RouteList.innerHTML = "";
+            for (const route of gameMapInstance.adjList.entries()) {
+                const listItem = document.createElement("li");
+                listItem.textContent = `Route from ${route.startCity} to ${route.endCity} - Length: ${route.length}, Color: ${route.color}, Claimed by: ${route.claimedBy ? route.claimedBy : "Unclaimed"}`;
+                RouteList.appendChild(listItem);
+            }   
+        }
+    }  
 
     function drawCities() {
         ctx.clearRect(0, 0, gameBoard.width, gameBoard.height);
