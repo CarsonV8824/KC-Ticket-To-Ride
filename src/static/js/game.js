@@ -71,9 +71,10 @@ document.addEventListener("DOMContentLoaded", () => {
     function update(deltaTime) {
         if (gameOver) return;
         const RouteList = document.getElementById("routeList");
+        const routes = gameMapInstance.adjList.values()
         if (RouteList) {
             RouteList.innerHTML = "";
-            for (const route of gameMapInstance.adjList.entries()) {
+            for (const route of routes) {
                 const listItem = document.createElement("li");
                 listItem.textContent = `Route from ${route.startCity} to ${route.endCity} - Length: ${route.length}, Color: ${route.color}, Claimed by: ${route.claimedBy ? route.claimedBy : "Unclaimed"}`;
                 RouteList.appendChild(listItem);
