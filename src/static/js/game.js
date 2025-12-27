@@ -69,6 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let lastTime = 0;
 
     function update() {
+        
         if (gameOver) return;
         const routeList = document.getElementById("routeList");
         if (!routeList) return;
@@ -76,10 +77,12 @@ document.addEventListener("DOMContentLoaded", () => {
         routeList.textContent = "";
         for (const [city, edges] of gameMapInstance.getRoutes()) {
             edges.forEach(edge => {
+                
                 const li = document.createElement("li");
                 li.textContent = `${city} to ${edge.node}: ${JSON.stringify(edge.value)}`;
                 routeList.appendChild(li);
                 console.log("routes", [gameMapInstance.getRoutes()]);
+                
             });
         }
     }
