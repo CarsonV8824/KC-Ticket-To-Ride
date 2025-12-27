@@ -27,10 +27,11 @@ def gamepage():
 def get_game_data():
     data = get_data_from_db()
     game_data = []
-    for player_data, map_data in data:
+    for player_data, map_data, open_pile in data:
         game_data.append({
             "player_data": player_data,
-            "map_data": map_data
+            "map_data": map_data,
+            "open_pile": open_pile
         })
     return jsonify(game_data)
 
@@ -39,7 +40,9 @@ def post_game_data():
     data = request.get_json()
     player_data = data.get("player_data")
     map_data = data.get("map_data")
-    add_data_to_db(player_data, map_data)
+    open_pile = data.get("open_pile")
+    
+    add_data_to_db(player_data, map_data, open_pile)
     return jsonify({"status": "success", "message": "Game data received."})
 
 if __name__ == "__main__":

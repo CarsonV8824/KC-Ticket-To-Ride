@@ -193,7 +193,8 @@ document.addEventListener("DOMContentLoaded", () => {
                         color: player.color,
                         cards: player.showCards()
                     })),
-                    map_data: Array.from(gameMapInstance.getRoutes().entries())
+                    map_data: Array.from(gameMapInstance.getRoutes().entries()),
+                    open_pile: OpenPile
                 })
             });
             
