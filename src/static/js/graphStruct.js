@@ -25,6 +25,25 @@ class gameMap{
         return this.adjList.get(city1).find(edge => edge.node === city2);
     }
 
+    getRoutes() {
+        return this.adjList;
+    }
+
+    buyRoute(city1, city2, playerColor){
+        const edge1 = this.getEdge(city1, city2);
+        const edge2 = this.getEdge(city2, city1);
+        if (edge1 && edge2) {
+            edge1.value["Player"] = playerColor;
+            edge2.value["Player"] = playerColor;
+        }
+    }
+
+    getRouteCost(city1, city2){
+        const edge = this.getEdge(city1, city2);
+        
+        return edge.value;
+        
+    }
 }
 
 

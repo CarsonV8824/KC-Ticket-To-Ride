@@ -7,25 +7,26 @@
     <script type="module" src="{{ url_for('static', filename='js/game.js') }}" defer></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
-<header>
-    <button id="back-to-player-count-page" class="back-to-player-count-btn">Change Player Count</button>
-</header>
 <body class="main-page-body">
-    <h1 class="player-turn" id="playerTurn">Player 1's Turn</h1>
-    <canvas id="gameCanvas" class="gamecanvas"></canvas>
-    <p class="player-stats" id="playerStats">Player Stats will be displayed here.</p>
-    <p class="open-pile" id="openPile">where open cards will be</p>
-</body>
-<body class="choices-on-turn-body">
+  <header>
+    <button id="back-to-player-count-page" class="back-to-player-count-btn">Change Player Count</button>
+  </header>
+
+  <h1 class="player-turn" id="playerTurn">Player 1's Turn</h1>
+  <canvas id="gameCanvas" class="gamecanvas"></canvas>
+  <p class="player-stats" id="playerStats">Player Stats will be displayed here.</p>
+  <p class="open-pile" id="openPile">where open cards will be</p>
+
+  <div class="choices-on-turn-body">
     <button class="choice-on-turn" id="drawTwoCards">Draw Two Cards</button>
     <button class="choice-on-turn" id="drawFromPile">Draw Route Cards</button>
     <select class="choice-on-turn" id="claimRoute" name="choose a route">
-        <option value="KC-to-Gladstone">KC-to-Gladstone</option>
-        <option value="KC-to-Raytown">KC-to-Raytown</option>
+      <option value="Kansas City-to-Gladstone">Kansas City-to-Gladstone</option>
+      <option value="Kansas City-to-Raytown">Kansas City-to-Raytown</option>
     </select>
-    <button class="choice-on-turn" id="BuyRoute">Buy Route</button>
-</body>
-<body>
-    <list class="route-list" id="routeList"></list>
+    <button class="choice-on-turn" id="claimRouteBtn">Claim Route</button>
+    
+  </div>
+  <ul class="route-list" id="routeList"></ul>
 </body>
 </html>

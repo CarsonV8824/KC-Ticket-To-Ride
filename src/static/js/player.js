@@ -23,6 +23,13 @@ class Player {
         return certainCards;
     }
 
+    removeCard(card) {
+        const index = this.cards.indexOf(card);
+        if (index > -1) {
+            this.cards.splice(index, 1);
+        }
+    }
+
 }
 
 export { Player };

@@ -15,8 +15,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 alert("Please enter a valid number of players between 2 and 5.");
                 return;
             }
-                sessionStorage.setItem("playerCount", String(count));
-                window.location.href = "/gamepage";
+            sessionStorage.setItem("playerCount", String(count));
+            window.location.href = "/gamepage";
         };
     }
 
@@ -68,20 +68,21 @@ document.addEventListener("DOMContentLoaded", () => {
     let gameOver = false;
     let lastTime = 0;
 
-    function update(deltaTime) {
+    function update() {
         if (gameOver) return;
-        const RouteList = document.getElementById("routeList");
-        const routes = gameMapInstance.adjList.values()
-        if (RouteList) {
-            RouteList.innerHTML = "";
-            for (const route of routes) {
-                const listItem = document.createElement("li");
-                listItem.textContent = `Route from ${route.startCity} to ${route.endCity} - Length: ${route.length}, Color: ${route.color}, Claimed by: ${route.claimedBy ? route.claimedBy : "Unclaimed"}`;
-                RouteList.appendChild(listItem);
-            }   
-        }
-    }  
+        const routeList = document.getElementById("routeList");
+        if (!routeList) return;
 
+        routeList.textContent = "";
+        for (const [city, edges] of gameMapInstance.getRoutes()) {
+            edges.forEach(edge => {
+                const li = document.createElement("li");
+                li.textContent = `${city} to ${edge.node}: ${JSON.stringify(edge.value)}`;
+                routeList.appendChild(li);
+                console.log("routes", [gameMapInstance.getRoutes()]);
+            });
+        }
+    }
     function drawCities() {
         ctx.clearRect(0, 0, gameBoard.width, gameBoard.height);
 
@@ -137,12 +138,72 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
+        const BuyRouteBtn = document.getElementById("claimRouteBtn");
+        
+        if (BuyRouteBtn ) {
+            BuyRouteBtn.onclick = () => {
+                
+                const selectedRoute = document.getElementById("claimRoute")?.value;
+                const [city1, city2] = selectedRoute.split("-to-");
+                
+                const PlayerCards = playerList[currentPlayerIndex].showCards();
+                const routeCost = gameMapInstance.getRouteCost(city1, city2);
+                let canBuy = true;
+                for (const color in routeCost) {
+                    if (color !== "Player" && PlayerCards.filter(card => card === color).length < routeCost[color]) {
+                        canBuy = false;
+                        break;
+                    }
+                }
+                if (canBuy && routeCost["Player"] === null) {
+                    gameMapInstance.buyRoute(city1, city2, playerList[currentPlayerIndex].color);
+                    for (const color in routeCost) {
+                        if (color !== "Player") {
+                            for (let i = 0; i < routeCost[color]; i++) {
+                                playerList[currentPlayerIndex].removeCard(color);
+                            }
+                        }
+                    }
+                    currentPlayerIndex = (currentPlayerIndex + 1) % playerList.length;
+                } 
+                else {
+                    alert("You do not have enough cards to buy this route or you are not allowed to buy this route.");
+                }
+                
+            };
+        }
 
         update(deltaTime);
         drawCities();
 
         requestAnimationFrame(gameLoop);
-    }
 
+        
+    }
     requestAnimationFrame(gameLoop);
+    
+    
+    async function saveGameState() {
+        try {
+            const response = await fetch("/get_data_from_js", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    player_data: playerList.map(player => ({
+                        color: player.color,
+                        cards: player.showCards()
+                    })),
+                    map_data: Array.from(gameMapInstance.getRoutes().entries())
+                })
+            });
+            
+            if (!response.ok) {
+                console.error("Failed to save game state:", response.statusText);
+            }
+        } catch (error) {
+            console.error("Error saving game state:", error);
+        }
+        
+    }
+    setInterval(saveGameState, 1000);
 });
