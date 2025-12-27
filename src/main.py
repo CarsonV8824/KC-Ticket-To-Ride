@@ -3,9 +3,9 @@ from database.database import Database
 
 #--- Database Interaction Functions ---
 
-def add_data_to_db(player_data, map_data):
+def add_data_to_db(player_data, map_data, open_pile):
     db = Database()
-    db.add_data(player_data, map_data)
+    db.add_data(player_data, map_data, open_pile)
 
 def get_data_from_db():
     db = Database()
