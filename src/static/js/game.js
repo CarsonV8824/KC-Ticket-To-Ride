@@ -146,8 +146,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             routeList.textContent = "";
             for (const [city, edges] of gameMapInstance.getRoutes()) {
-                edges.forEach(edge => {
-                    
+                edges.forEach((edge, index) => {
+                    if (index % 2 === 1) return;
                     const li = document.createElement("li");
                     li.textContent = `${city} to ${edge.node}: ${JSON.stringify(edge.value)}`;
                     routeList.appendChild(li);
