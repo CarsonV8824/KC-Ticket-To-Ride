@@ -45,6 +45,8 @@ def post_game_data():
     map_data = data.get("map_data")
     open_pile = data.get("open_pile")
     
+    with open("src/database/test_database.json", "a") as f:
+        f.write(str(data) + "\n")
     add_data_to_db(player_data, map_data, open_pile)
     return jsonify({"status": "success", "message": "Game data received."})
 
