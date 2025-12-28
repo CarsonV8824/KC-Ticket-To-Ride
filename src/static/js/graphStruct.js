@@ -44,6 +44,27 @@ class gameMap{
         return edge.value;
         
     }
+
+    getRoutePoints(city1, city2){
+        const edge = this.getEdge(city1, city2);
+        const costValues = Object.values(edge.value);
+        let points = 0;
+
+        if (costValues.includes(1)) {
+            points = 1;
+        } else if (costValues.includes(2)) {
+            points = 2;
+        } else if (costValues.includes(3)) {
+            points = 4;
+        } else if (costValues.includes(4)) {
+            points = 7;
+        } else if (costValues.includes(5)) {
+            points = 10;
+        } else if (costValues.includes(6)) {
+            points = 15;
+        }  
+        return points;
+    }
 }
 
 
