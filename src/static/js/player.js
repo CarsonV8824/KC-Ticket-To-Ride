@@ -3,6 +3,7 @@ class Player {
     constructor(color){
         this.cards = [];
         this.color = color;
+        this.score = 0;
     }
 
     addCard(card){

@@ -56,6 +56,13 @@
     font-size:24px;
     color:black;
 }
+
+.points{
+    text-align:center;
+    font-size:20px;
+    color:black;
+}
+
 .player-stats{
     text-align:center;
     font-size:16px;
