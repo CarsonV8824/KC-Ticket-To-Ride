@@ -15,6 +15,7 @@ def get_data_from_db():
 def update_data_in_db(player_data, map_data, open_pile):
     db = Database()
     db.update_data(player_data, map_data, open_pile)
+
 #--- Flask Application ---
 
 app = Flask(__name__)
