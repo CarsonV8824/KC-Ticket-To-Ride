@@ -37,53 +37,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const ctx = gameBoard.getContext("2d");
 
-    try {
-        fetch("/send_data_to_js")
-            .then(response => response.json())
-            .then(data => {
-                const playerData = data.player_data;
-                const mapData = data.map_data;
-                const openPileData = data.open_pile;
-                const playerList = playerData.map(p => {
-                    const player = new Player(p.color);
-                    p.cards.forEach(card => player.addCard(card));
-                    return player;
-                });
-                const gameMapInstance = mapData.reduce((gm, [city, edges]) => {
-                    gm.adjList.set(city, edges);
-                    return gm;
-                }, new gameMap());
-                const OpenPile = openPileData;
-                console.log("Loaded game state from server.");
-                
-            });
-    } catch (error) {
-        const playerCount = parseInt(sessionStorage.getItem("playerCount") || "2", 10);
-        const playerColors = ["blue", "red", "green", "yellow", "black"];
-        const Cards = ["white", "green"]
-        const OpenPile = [];
+    const playerCount = parseInt(sessionStorage.getItem("playerCount") || "2", 10);
+    const playerColors = ["blue", "red", "green", "yellow", "black"];
+    const Cards = ["white", "green"]
+    const OpenPile = [];
 
-        for (let i = 0; i < 5; i++) {
-            OpenPile.push(Cards[Math.floor(Math.random() * Cards.length)]);
-        }
+    for (let i = 0; i < 5; i++) {
+        OpenPile.push(Cards[Math.floor(Math.random() * Cards.length)]);
+    }
         
-        const playerList = [];
+    const playerList = [];
 
-        for (let i = 0; i < playerCount; i++) {
-            playerList.push(new Player(playerColors[i]));
-        }
+    for (let i = 0; i < playerCount; i++) {
+        playerList.push(new Player(playerColors[i]));
+    }
         
-        console.log(playerList.length);
+    console.log(playerList.length);
 
-        for (let i = 0; i < playerList.length; i++) {
-            playerList[i].addCard(Cards[Math.floor(Math.random() * Cards.length)]);
-            playerList[i].addCard(Cards[Math.floor(Math.random() * Cards.length)]);
-            playerList[i].addCard(Cards[Math.floor(Math.random() * Cards.length)]);
-            playerList[i].addCard(Cards[Math.floor(Math.random() * Cards.length)]);
-        }
+    for (let i = 0; i < playerList.length; i++) {
+        playerList[i].addCard(Cards[Math.floor(Math.random() * Cards.length)]);
+        playerList[i].addCard(Cards[Math.floor(Math.random() * Cards.length)]);
+        playerList[i].addCard(Cards[Math.floor(Math.random() * Cards.length)]);
+        playerList[i].addCard(Cards[Math.floor(Math.random() * Cards.length)]);
+    }
 
-        const gameMapInstance = new gameMap();
-}
+    const gameMapInstance = new gameMap();
+
     let currentPlayerIndex = 0;
     let gameOver = false;
     let lastTime = 0;
