@@ -25,15 +25,18 @@ def gamepage():
 
 @app.route("/get_data_from_py", methods=["GET"])
 def get_game_data():
-    data = get_data_from_db()
-    game_data = []
-    for player_data, map_data, open_pile in data:
-        game_data.append({
-            "player_data": player_data,
-            "map_data": map_data,
-            "open_pile": open_pile
-        })
-    return jsonify(game_data)
+    try:
+        data = get_data_from_db()
+        game_data = []
+        for player_data, map_data, open_pile in data:
+            game_data.append({
+                "player_data": player_data,
+                "map_data": map_data,
+                "open_pile": open_pile
+            })
+        return jsonify(game_data)
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
 
 @app.route("/get_data_from_js", methods=["POST"])
 def post_game_data():
