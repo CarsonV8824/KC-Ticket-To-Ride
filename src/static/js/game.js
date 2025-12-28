@@ -7,28 +7,42 @@ document.addEventListener("DOMContentLoaded", async () => {
     const countInput = document.getElementById("player-count-input");
 
     if (countBtn && countInput) {
-    countBtn.onclick = (event) => {
-        event.preventDefault();
-        const count = parseInt(countInput.value ?? "", 10);
-        if (isNaN(count) || count < 2 || count > 5) {
-            alert("Please enter a valid number of players between 2 and 5.");
-            return;
-        }
-        
-        fetch("/initialize_game", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ player_count: count })
-        }).then(() => {
-            sessionStorage.setItem("playerCount", String(count));
-            window.location.href = "/gamepage";
-        }).catch((error) => {
-            console.error("Error initializing game:", error);
-            alert("Failed to initialize game. Please try again.");
-        });
-    };
-}
+        countBtn.onclick = (event) => {
+            event.preventDefault();
+            const count = parseInt(countInput.value ?? "", 10);
+            if (isNaN(count) || count < 2 || count > 5) {
+                alert("Please enter a valid number of players between 2 and 5.");
+                return;
+            }
+            
+            fetch("/initialize_game", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ player_count: count })
+            }).then(() => {
+                sessionStorage.setItem("playerCount", String(count));
+                window.location.href = "/gamepage";
+            }).catch((error) => {
+                console.error("Error initializing game:", error);
+                alert("Failed to initialize game. Please try again.");
+            });
+        };
+    }
 
+    const ResetBtn = document.getElementById("reset-game-btn");
+    if (ResetBtn) {
+        ResetBtn.onclick = () => {
+            fetch("/reset_game", { method: "POST" })
+                .then(() => {
+                    sessionStorage.removeItem("playerCount");   
+                    window.location.href = "/";
+                })
+                .catch((error) => {
+                    console.error("Error resetting game:", error);
+                    alert("Failed to reset game. Please try again.");
+                });
+        };
+    }
     // Back to player count page button logic
     const backBtn = document.getElementById("back-to-player-count-page");
     if (backBtn) {
@@ -77,7 +91,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (data) {
         playerCount = data.player_data.length;
         playerColors = ["blue", "red", "green", "yellow", "black"];
-        Cards = ["white", "green"];
+        Cards = ["white", "green", "pink", "black", "red", "blue", "yellow", "orange"];
         OpenPile = data.open_pile;
         playerList = data.player_data.map(playerData => {
             const player = new Player(playerData.color);
@@ -97,7 +111,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 } catch (error) {
     playerCount = parseInt(sessionStorage.getItem("playerCount") || "2", 10);
     playerColors = ["blue", "red", "green", "yellow", "black"];
-    Cards = ["white", "green"];
+    Cards = ["white", "green", "pink", "black", "red", "blue", "yellow", "orange"];
     OpenPile = [];
 
     for (let i = 0; i < 5; i++) {

@@ -23,6 +23,17 @@ app = Flask(__name__)
 def main():
     return render_template("playerCount.html")
 
+@app.route("/reset_game", methods=["POST"])
+def reset_game():
+    try:
+        db = Database()
+        db.cursor.execute("DELETE FROM TicketToRide")
+        db.connection.commit()
+        db.connection.close()
+        return jsonify({"status": "success"}), 200
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+
 @app.route("/initialize_game", methods=["POST"])
 def initialize_game():
     try:
