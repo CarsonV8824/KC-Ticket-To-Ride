@@ -39,5 +39,10 @@ class Database:
             print(f"Error retrieving data: {e}")
             return []
     
+    def update_data(self, player_data: dict, map_data: dict, open_pile: list):
+        self.cursor.execute("""
+        UPDATE TicketToRide SET PlayerData = ?, MapData = ?, OpenPile = ? WHERE id = (SELECT MAX(id) FROM TicketToRide)
+        """, (json.dumps(player_data), json.dumps(map_data), json.dumps(open_pile)))
+        self.connection.commit()
     def __del__(self):
         self.connection.close()
