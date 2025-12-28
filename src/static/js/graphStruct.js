@@ -19,6 +19,12 @@ class gameMap{
         this.#addEdge("Plattsburg", "Hamilton", {"yellow":1, "Player":null});
         this.#addEdge("Oak Grove", "Harrisonville", {"orange":3, "Player":null});
         this.#addEdge("Lee's Summit", "Lone Jack", {"white":1, "Player":null});
+        this.#addEdge("Lone Jack", "Harrisonville", {"pink":2, "Player":null});
+        this.#addEdge("Kansas City", "Overland Park", {"black":2, "Player":null});
+        this.#addEdge("Overland Park", "Shawnee", {"red":1, "Player":null});
+        this.#addEdge("Shawnee", "Lenexa", {"blue":2, "Player":null});
+        this.#addEdge("Lenexa", "Olathe", {"green":1, "Player":null});
+        this.#addEdge("Olathe", "Harrisonville", {"yellow":4, "Player":null});
     }
 
     #addVertex(vertex) {
@@ -84,3 +90,26 @@ class gameMap{
 
 
 export { gameMap };
+
+export const cityCoordinates = {
+    "Kansas City":        { x: 400, y: 300 }, // Center
+    "Gladstone":          { x: 400, y: 220 }, // North of KC
+    "Liberty":            { x: 470, y: 180 }, // NE of KC
+    "Excelsior Springs":  { x: 540, y: 120 }, // Further NE
+    "Kearney":            { x: 570, y: 80 },  // North of Excelsior Springs
+    "Smithville":         { x: 500, y: 60 },  // NW of Kearney
+    "Plattsburg":         { x: 600, y: 40 },  // NE of Smithville
+    "Hamilton":           { x: 700, y: 60 },  // Further NE
+    "Independence":       { x: 520, y: 320 }, // East of KC
+    "Blue Springs":       { x: 600, y: 340 }, // Further east
+    "Lee's Summit":       { x: 650, y: 420 }, // SE of KC
+    "Grain Valley":       { x: 720, y: 400 }, // East of Lee's Summit
+    "Oak Grove":          { x: 770, y: 420 }, // Further east
+    "Raytown":            { x: 480, y: 370 }, // SE of KC, closer than Lee's Summit
+    "Lone Jack":          { x: 700, y: 500 }, // SE, further out
+    "Harrisonville":      { x: 600, y: 550 }, // South of Lone Jack
+    "Overland Park":      { x: 320, y: 420 }, // SW of KC
+    "Olathe":             { x: 250, y: 500 }, // Further SW
+    "Shawnee":            { x: 280, y: 350 }, // West of KC
+    "Lenexa":             { x: 200, y: 400 }  // SW of Shawnee
+};

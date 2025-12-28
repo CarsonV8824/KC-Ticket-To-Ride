@@ -1,5 +1,6 @@
 import { Player } from "./player.js";
-import { gameMap } from "./graphStruct.js"; 
+import { gameMap, cityCoordinates } from "./graphStruct.js"; 
+
 
 document.addEventListener("DOMContentLoaded", async () => {
     // Player count page logic
@@ -159,19 +160,54 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         }
         function drawCities() {
+            
+            ctx.fillStyle = "black";
+            ctx.font = "12px Times New Roman";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            for (const [city, pos] of Object.entries(cityCoordinates)) {
+                ctx.beginPath();
+                ctx.arc(pos.x, pos.y, 8, 0, 2 * Math.PI);
+                ctx.fillStyle = "white";
+                ctx.fill();
+                ctx.strokeStyle = "black";
+                ctx.stroke();
+                ctx.fillStyle = "black";
+                ctx.fillText(city, pos.x, pos.y - 15);
+            }
+        }
+
+        function drawAndUpdateRoutes(routeData) {
             ctx.clearRect(0, 0, gameBoard.width, gameBoard.height);
+            
+            for (const [city, edges] of routeData) {
+                const fromPos = cityCoordinates[city];
+                edges.forEach(edge => {
+                    const toPos = cityCoordinates[edge.node];
+                    // Avoid drawing the same route twice
+                    if (city > edge.node) return;
 
-            ctx.fillStyle = "black";
-            ctx.font = "12px Times New Roman";
-            ctx.textAlign = "center";
-            ctx.textBaseline = "middle";
-            ctx.fillText("Kansas City", gameBoard.width / 2, gameBoard.height / 2);
+                    // Calculate midpoint
+                    const midX = (fromPos.x + toPos.x) / 2;
+                    const midY = (fromPos.y + toPos.y) / 2;
 
-            ctx.fillStyle = "black";
-            ctx.font = "12px Times New Roman";
-            ctx.textAlign = "center";
-            ctx.textBaseline = "middle";
-            ctx.fillText("Gladstone", gameBoard.width / 2, gameBoard.height / 2 - 120);
+                    // Calculate angle and length
+                    const dx = toPos.x - fromPos.x;
+                    const dy = toPos.y - fromPos.y;
+                    const length = Math.sqrt(dx * dx + dy * dy) - 16;
+                    const angle = Math.atan2(dy, dx);
+
+                    // Set color
+                    ctx.save();
+                    ctx.translate(midX, midY);
+                    ctx.rotate(angle);
+                    ctx.fillStyle = edge.value["Player"] || "gray";
+                    // Draw rectangle centered at midpoint, width = length, height = 12
+                    ctx.fillRect(-length / 2, -6, length, 12);
+                    ctx.restore();
+                });
+            }
+            drawCities();
         }
 
         function gameLoop(timestamp) {
@@ -190,12 +226,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             const playerTurnElement = document.getElementById("playerTurn");
             if (playerTurnElement) {
-                playerTurnElement.textContent = `Player ${currentPlayerIndex + 1}'s Turn`;
+                playerTurnElement.textContent = `${playerList[currentPlayerIndex].color}'s Turn`;
             }
 
             const playerStatsElement = document.getElementById("playerStats");
             if (playerStatsElement) {
-                playerStatsElement.textContent = `Player ${currentPlayerIndex + 1} has ${(playerList[currentPlayerIndex].showCards()).join(", ")}, cards.`;
+                playerStatsElement.textContent = `${playerList[currentPlayerIndex].color} has ${(playerList[currentPlayerIndex].showCards()).join(", ")}, cards.`;
             }
 
             const DrawTwoCardsBtn = document.getElementById("drawTwoCards");
@@ -244,6 +280,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                                 }
                             }
                         }
+                        
                         playerList[currentPlayerIndex].score += gameMapInstance.getRoutePoints(city1, city2);
                         currentPlayerIndex = (currentPlayerIndex + 1) % playerList.length;
                     } 
@@ -255,8 +292,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
 
             update(deltaTime);
-            drawCities();
-
+            drawAndUpdateRoutes(gameMapInstance.getRoutes());
             requestAnimationFrame(gameLoop);
 
             if (OpenPile.length < 4) {
