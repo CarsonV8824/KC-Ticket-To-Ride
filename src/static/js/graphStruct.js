@@ -4,6 +4,21 @@ class gameMap{
         this.adjList = new Map();
         this.#addEdge("Kansas City", "Gladstone", {"green":2, "Player":null});
         this.#addEdge("Kansas City", "Raytown", {"white":2, "Player":null});
+        this.#addEdge("Kansas City", "Independence", {"pink":1, "Player":null});
+        this.#addEdge("Gladstone", "Liberty", {"black":1, "Player":null});
+        this.#addEdge("Raytown", "Independence", {"red":1, "Player":null});
+        this.#addEdge("Liberty", "Independence", {"blue":2, "Player":null});
+        this.#addEdge("Liberty", "Excelsior Springs", {"yellow":3, "Player":null});
+        this.#addEdge("Independence", "Blue Springs", {"orange":2, "Player":null});
+        this.#addEdge("Excelsior Springs", "Kearney", {"white":2, "Player":null});
+        this.#addEdge("Blue Springs", "Lee's Summit", {"green":1, "Player":null});
+        this.#addEdge("Kearney", "Smithville", {"pink":1, "Player":null});
+        this.#addEdge("Lee's Summit", "Grain Valley", {"black":2, "Player":null});
+        this.#addEdge("Smithville", "Plattsburg", {"red":2, "Player":null});
+        this.#addEdge("Grain Valley", "Oak Grove", {"blue":1, "Player":null});
+        this.#addEdge("Plattsburg", "Hamilton", {"yellow":1, "Player":null});
+        this.#addEdge("Oak Grove", "Harrisonville", {"orange":3, "Player":null});
+        this.#addEdge("Lee's Summit", "Lone Jack", {"white":1, "Player":null});
     }
 
     #addVertex(vertex) {
