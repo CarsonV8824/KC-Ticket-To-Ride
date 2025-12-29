@@ -5,7 +5,7 @@ class Player {
         this.color = color;
         this.score = 0;
         this.trains = 15;
-        this.destinations = [];
+        this.destinations = ["Kansas City - Lee's Summmit"];
     }
 
     addCard(card){
