@@ -123,6 +123,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             const player = new Player(playerData.color);
             playerData.cards.forEach(card => player.addCard(card));
             player.score = playerData.score || 0; 
+            player.trains = playerData.trains || 15;
+            player.destinations = playerData.destinations || [];
             return player;
         });
         gameMapInstance = new gameMap();
@@ -264,6 +266,11 @@ document.addEventListener("DOMContentLoaded", async () => {
                 playerTrainsElement.textContent = `${playerList[currentPlayerIndex].color} has ${playerList[currentPlayerIndex].trains} trains left.`;
             }
 
+            const playerDestinationsElement = document.getElementById("playerDestinations");
+            if (playerDestinationsElement) {
+                playerDestinationsElement.textContent = "Destinations: " + playerList[currentPlayerIndex].destinations.join(", ");
+            }
+
             const DrawTwoCardsBtn = document.getElementById("drawTwoCards");
             if (DrawTwoCardsBtn ) {
                 DrawTwoCardsBtn.onclick = () => {
@@ -311,8 +318,11 @@ document.addEventListener("DOMContentLoaded", async () => {
                             }
                         }
                         
+                        
                         playerList[currentPlayerIndex].score += gameMapInstance.getRoutePoints(city1, city2);
                         playerList[currentPlayerIndex].subtractTrains(gameMapInstance.getRouteLength(city1, city2));
+                        console.log("Updated Score:", playerList[currentPlayerIndex].score);
+                        console.log("Updated Trains:", playerList[currentPlayerIndex].trains);
                         currentPlayerIndex = (currentPlayerIndex + 1) % playerList.length;
                     } 
                     else {
@@ -341,6 +351,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                     break;
                 }
             }
+
+            
         }
         requestAnimationFrame(gameLoop);
         
@@ -354,7 +366,9 @@ document.addEventListener("DOMContentLoaded", async () => {
                         player_data: playerList.map(player => ({
                             color: player.color,
                             cards: player.showCards(),
-                            score: player.score
+                            score: player.score,
+                            trains: player.trains,
+                            destinations: player.destinations
                         })),
                         map_data: Array.from(gameMapInstance.getRoutes().entries()),
                         open_pile: OpenPile

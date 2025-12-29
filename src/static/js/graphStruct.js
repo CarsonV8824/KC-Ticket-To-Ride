@@ -86,6 +86,19 @@ class gameMap{
         }  
         return points;
     }
+
+    getRouteLength(city1, city2){
+        const edge = this.getEdge(city1, city2);
+        const costValues = Object.values(edge.value);
+        let length = 0;
+        for (let val of costValues){
+            if (typeof val === 'number'){
+                length = val;
+                break;
+            }
+        }
+        return length;
+    }
 }
 
 

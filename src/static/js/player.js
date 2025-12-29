@@ -5,6 +5,7 @@ class Player {
         this.color = color;
         this.score = 0;
         this.trains = 15;
+        this.destinations = [];
     }
 
     addCard(card){
@@ -34,10 +35,6 @@ class Player {
 
     subtractTrains(num){
         this.trains -= num;
-    }
-
-    addToScore(points){
-        this.score += points;
     }
 
 }
