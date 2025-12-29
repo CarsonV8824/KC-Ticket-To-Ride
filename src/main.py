@@ -100,7 +100,7 @@ def about():
 
 @app.route("/gameover")
 def gameover():
-    return render_template("gameover.html")
+    return render_template("final.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
