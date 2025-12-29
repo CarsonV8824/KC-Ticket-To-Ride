@@ -93,6 +93,10 @@ def post_game_data():
         return jsonify({"status": "success", "message": "Game data updated."})
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
+    
+@app.route("/about")
+def about():
+    return render_template("about.html")
 
 if __name__ == "__main__":
     app.run(debug=True)

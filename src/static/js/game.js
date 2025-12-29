@@ -53,6 +53,31 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
     
     // Main game function - only run if canvas exists
+    
+    const AboutBtn = document.getElementById("about-page-btn");
+    if (AboutBtn) {
+        AboutBtn.onclick = () => {
+            window.location.href = "/about";
+        };
+    }
+    
+    const FromAboutToGameBtn = document.getElementById("home-page-btn");
+    if (FromAboutToGameBtn) {
+        FromAboutToGameBtn.onclick = () => {
+            console.log("Clicked Home Button from About Page");
+            window.location.href = "/gamepage";
+        }
+    }
+    
+    const HomeBtn = document.getElementById("back-to-player-count-page");
+    if (HomeBtn) {
+        HomeBtn.onclick = () => {
+            console.log("Clicked Home Button");
+            window.location.href = "/";
+        };
+    }
+
+
     const gameBoard = document.getElementById("gameCanvas");
     if (!gameBoard) return; // Exit if not on game page
 
