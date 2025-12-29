@@ -44,7 +44,16 @@ def initialize_game():
         if player_count not in [2, 3, 4, 5]:
             return jsonify({"status": "error", "message": "Invalid player count"}), 400
         # Create initial game data
-        player_data = [{"color": ["blue", "red", "green", "yellow", "black"][i], "cards": []} for i in range(player_count)]
+        player_data = [
+            {
+                "id": i+1,
+                "color": ["blue", "red", "green", "yellow", "black"][i],
+                "score": 0,
+                "trains": 15,
+                "destinations": ["Kansas City - Lee's Summit"]  # Example destination
+            }
+            for i in range(player_count)
+        ]
         map_data = []
         open_pile = []
         

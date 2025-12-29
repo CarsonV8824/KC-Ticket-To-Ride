@@ -124,7 +124,9 @@ document.addEventListener("DOMContentLoaded", async () => {
             playerData.cards.forEach(card => player.addCard(card));
             player.score = playerData.score || 0; 
             player.trains = playerData.trains || 15;
-            player.destinations = playerData.destinations || [];
+            player.destinations = (playerData.destinations && playerData.destinations.length > 0)
+                ? playerData.destinations
+                : ["Kansas City - Lee's Summit"];
             return player;
         });
         gameMapInstance = new gameMap();
@@ -178,7 +180,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                     const li = document.createElement("li");
                     li.textContent = `${city} to ${edge.node}: ${JSON.stringify(edge.value)}`;
                     routeList.appendChild(li);
-                    console.log("routes", [gameMapInstance.getRoutes()]);
                     
                 });
             }
@@ -268,7 +269,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             const playerDestinationsElement = document.getElementById("playerDestinations");
             if (playerDestinationsElement) {
-                playerDestinationsElement.textContent = "Destinations: " + playerList[currentPlayerIndex].destinations.join(", ");
+                playerDestinationsElement.textContent = `${playerList[currentPlayerIndex].color}'s Destinations: ${playerList[currentPlayerIndex].destinations.map(dest => typeof dest === "string" ? dest : JSON.stringify(dest)).join(", ")}`;
             }
 
             const DrawTwoCardsBtn = document.getElementById("drawTwoCards");
