@@ -53,6 +53,31 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
     
     // Main game function - only run if canvas exists
+    
+    const AboutBtn = document.getElementById("about-page-btn");
+    if (AboutBtn) {
+        AboutBtn.onclick = () => {
+            window.location.href = "/about";
+        };
+    }
+    
+    const FromAboutToGameBtn = document.getElementById("home-page-btn");
+    if (FromAboutToGameBtn) {
+        FromAboutToGameBtn.onclick = () => {
+            console.log("Clicked Home Button from About Page");
+            window.location.href = "/gamepage";
+        }
+    }
+    
+    const HomeBtn = document.getElementById("back-to-player-count-page");
+    if (HomeBtn) {
+        HomeBtn.onclick = () => {
+            console.log("Clicked Home Button");
+            window.location.href = "/";
+        };
+    }
+
+
     const gameBoard = document.getElementById("gameCanvas");
     if (!gameBoard) return; // Exit if not on game page
 
@@ -234,6 +259,11 @@ document.addEventListener("DOMContentLoaded", async () => {
                 playerStatsElement.textContent = `${playerList[currentPlayerIndex].color} has ${(playerList[currentPlayerIndex].showCards()).join(", ")}, cards.`;
             }
 
+            const playerTrainsElement = document.getElementById("playerTrains");
+            if (playerTrainsElement) {
+                playerTrainsElement.textContent = `${playerList[currentPlayerIndex].color} has ${playerList[currentPlayerIndex].trains} trains left.`;
+            }
+
             const DrawTwoCardsBtn = document.getElementById("drawTwoCards");
             if (DrawTwoCardsBtn ) {
                 DrawTwoCardsBtn.onclick = () => {
@@ -282,6 +312,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                         }
                         
                         playerList[currentPlayerIndex].score += gameMapInstance.getRoutePoints(city1, city2);
+                        playerList[currentPlayerIndex].subtractTrains(gameMapInstance.getRouteLength(city1, city2));
                         currentPlayerIndex = (currentPlayerIndex + 1) % playerList.length;
                     } 
                     else {
@@ -297,6 +328,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             if (OpenPile.length < 4) {
                 OpenPile.push(Cards[Math.floor(Math.random() * Cards.length)]);
+            }
+            
+            for (const player of playerList) {
+                if (player.trains <= 2) {
+                    window.location.href = "/gameover";
+                    const GameStats = document.getElementById("finalScores");
+                    if (GameStats) {
+                        GameStats.textContent = "Final Scores:\n" + playerList.map(p => `${p.color}: ${p.score} points`).join("\n");
+                    }
+                    gameOver = true;
+                    break;
+                }
             }
         }
         requestAnimationFrame(gameLoop);

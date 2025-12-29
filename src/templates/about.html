@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Ticket to Ride</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script type="module" src="{{ url_for('static', filename='js/game.js') }}" defer></script>
+</head>
+<body class="about-page-body">
+  <header>
+    <button id="back-to-player-count-page" class="back-to-game-page">Change Player Count</button>
+    <button id="home-page-btn" class="home-page-btn">Home</button>
+    <!-- Optional: Only include this if you want an About button on the About page -->
+    <!-- <button id="about-page-btn" class="about-page-btn">About</button> -->
+  </header>
+
+  <h1>About Ticket to Ride</h1>
+  <p>Ticket to Ride is a popular board game where players collect train cards to claim railway routes across a map. The goal is to complete destination tickets and earn the most points by the end of the game.</p>
+  
+  <h2>How to Play</h2>
+  <ul>
+    <li>Each player starts with a set number of train cards and destination tickets.</li>
+    <li>On your turn, you can either draw train cards, claim a route, or draw additional destination tickets.</li>
+    <li>Claiming routes requires you to have the appropriate number and color of train cards.</li>
+    <li>The game ends when a player has two or fewer trains left, and final scores are calculated based on completed routes and tickets.</li>
+  </ul>
+
+  <h2>Credits</h2>
+  <p>This digital adaptation of Ticket to Ride was created by Carson V. The original board game was designed by Alan R. Moon and published by Days of Wonder.</p>
+</body>
+</html>

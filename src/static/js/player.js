@@ -4,6 +4,7 @@ class Player {
         this.cards = [];
         this.color = color;
         this.score = 0;
+        this.trains = 15;
     }
 
     addCard(card){
@@ -29,6 +30,14 @@ class Player {
         if (index > -1) {
             this.cards.splice(index, 1);
         }
+    }
+
+    subtractTrains(num){
+        this.trains -= num;
+    }
+
+    addToScore(points){
+        this.score += points;
     }
 
 }
