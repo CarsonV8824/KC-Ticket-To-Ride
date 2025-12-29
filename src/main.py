@@ -98,5 +98,9 @@ def post_game_data():
 def about():
     return render_template("about.html")
 
+@app.route("/gameover")
+def gameover():
+    return render_template("gameover.html")
+
 if __name__ == "__main__":
     app.run(debug=True)

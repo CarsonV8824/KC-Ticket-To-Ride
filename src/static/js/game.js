@@ -259,6 +259,11 @@ document.addEventListener("DOMContentLoaded", async () => {
                 playerStatsElement.textContent = `${playerList[currentPlayerIndex].color} has ${(playerList[currentPlayerIndex].showCards()).join(", ")}, cards.`;
             }
 
+            const playerTrainsElement = document.getElementById("playerTrains");
+            if (playerTrainsElement) {
+                playerTrainsElement.textContent = `${playerList[currentPlayerIndex].color} has ${playerList[currentPlayerIndex].trains} trains left.`;
+            }
+
             const DrawTwoCardsBtn = document.getElementById("drawTwoCards");
             if (DrawTwoCardsBtn ) {
                 DrawTwoCardsBtn.onclick = () => {
@@ -307,6 +312,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                         }
                         
                         playerList[currentPlayerIndex].score += gameMapInstance.getRoutePoints(city1, city2);
+                        playerList[currentPlayerIndex].subtractTrains(gameMapInstance.getRouteLength(city1, city2));
                         currentPlayerIndex = (currentPlayerIndex + 1) % playerList.length;
                     } 
                     else {
