@@ -36,6 +36,10 @@ class Player {
         this.trains -= num;
     }
 
+    addToScore(points){
+        this.score += points;
+    }
+
 }
 
 export { Player };

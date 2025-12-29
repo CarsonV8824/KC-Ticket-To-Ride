@@ -329,6 +329,18 @@ document.addEventListener("DOMContentLoaded", async () => {
             if (OpenPile.length < 4) {
                 OpenPile.push(Cards[Math.floor(Math.random() * Cards.length)]);
             }
+            
+            for (const player of playerList) {
+                if (player.trains <= 2) {
+                    window.location.href = "/gameover";
+                    const GameStats = document.getElementById("finalScores");
+                    if (GameStats) {
+                        GameStats.textContent = "Final Scores:\n" + playerList.map(p => `${p.color}: ${p.score} points`).join("\n");
+                    }
+                    gameOver = true;
+                    break;
+                }
+            }
         }
         requestAnimationFrame(gameLoop);
         
