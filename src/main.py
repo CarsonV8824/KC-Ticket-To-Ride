@@ -41,6 +41,8 @@ def initialize_game():
         data = request.get_json()
         player_count = data.get("player_count")
         
+        if player_count not in [2, 3, 4, 5]:
+            return jsonify({"status": "error", "message": "Invalid player count"}), 400
         # Create initial game data
         player_data = [{"color": ["blue", "red", "green", "yellow", "black"][i], "cards": []} for i in range(player_count)]
         map_data = []
@@ -77,9 +79,6 @@ def post_game_data():
     map_data = data.get("map_data")
     open_pile = data.get("open_pile")
     
-    with open("src/database/test_database.txt", "a") as f:
-        f.write(str(data) + "\n")
-    
     # Update the last row instead of inserting a new one
     try:
         db = Database()
@@ -96,4 +95,4 @@ def post_game_data():
         return jsonify({"status": "error", "message": str(e)}), 500
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(ssl_context='adhoc', debug=True)
