@@ -11,7 +11,7 @@ A web-based version of the Ticket to Ride board game, set in Kansas City. Play w
 - 💾 Persistent game state using SQLite
 - 🔄 Real-time updates with Flask backend and JavaScript frontend
 - 📝 Destination tickets per player (Currently being worked on)
-- 🃏 Draw train cards and destination tickets
+- 🃏 Draw train cards
 - 🖥️ Responsive UI for desktop browsers
 
 ## Getting Started
